@@ -55,6 +55,10 @@ $Route->group('admin', function ($Route) {
             $Route->crud('user');
         });
 
+        $Route->group('agenda', function ($Route) {
+            $Route->crud('commitment');
+        });
+
         $Route->group('configuracoes', function ($Route) {
             $Route->crud('configuracao');
         });

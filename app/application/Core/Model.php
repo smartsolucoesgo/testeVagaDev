@@ -17,7 +17,7 @@ class Model
                 self::$PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 self::$PDO->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
                 self::$PDO->exec("SET time_zone='".date('P')."';");
-            } catch (PDOException $e) {
+            } catch (\PDOException $e) {
                 // Normally, we would log this
                 die('Connection error: ' . $e->getMessage() . '<br/>');
             }
@@ -94,7 +94,7 @@ class Model
         $query->execute([':id' => $id]);
     }
 
-    public function all($table, $order = 'id', $field = false, $value = false)
+    public function all($table, $order = 'id', $field = false, $value = false, $order_by = "status")
     {
 
         $where = '';
@@ -105,7 +105,7 @@ class Model
         } elseif($field) {
             $where = "AND " . $field . " = '" . $value . "'";
         }
-        $sql = "SELECT * FROM " . $table . " WHERE 1=1 " . $where . " ORDER BY status DESC, " . $order;
+        $sql = "SELECT * FROM " . $table . " WHERE 1=1 " . $where . " ORDER BY ". $order_by ." DESC, " . $order;
         $query = $this->PDO()->prepare($sql);
         $query->execute();
         return $query->fetchAll();
